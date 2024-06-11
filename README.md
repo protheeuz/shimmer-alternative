@@ -17,8 +17,17 @@ To use this package, add `shimmer_alternative` as a dependency in your `pubspec.
 ```yaml
 dependencies:
   shimmer_alternative: ^0.0.1
+
+
+## Getting Started
+
+To use this package, add `shimmer_alternative` as a dependency in your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  shimmer_alternative: ^0.0.1
 ```
-Usage
+### Usage
 Here is a simple example of how to use Shimmer Alternative:
 
 ```dart
@@ -130,4 +139,4 @@ ShimmerAlternative(
 Contributions are welcome! If you have any ideas, suggestions, or find a bug, please create an issue or submit a pull request.
 
 License
-This project is licensed under the GPL-3.0 license - see the LICENSE file for details.
+This project is licensed under the GPL-3.0 license - see the LICENSE(https://github.com/protheeuz/shimmer-alternative?tab=GPL-3.0-1-ov-file#GPL-3.0-1-ov-file) file for details.
