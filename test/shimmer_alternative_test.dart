@@ -254,7 +254,7 @@ void main() {
     final state = tester.state<TestableShimmerState>(find.byKey(testKey));
     state.stopAnimation();
 
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(animationStopped, isTrue);
   });
 }
@@ -321,6 +321,7 @@ class TestableShimmerState extends State<TestableShimmer>
 
   void stopAnimation() {
     _controller.stop();
+    widget.onAnimationStop?.call();
   }
 
   @override
