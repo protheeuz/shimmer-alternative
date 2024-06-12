@@ -1,6 +1,6 @@
 name: shimmer_alternative
 description: A Flutter package to show shimmer effect while loading cards, containers, text, and text fields.
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/protheeuz/shimmer-alternative
 repository: https://github.com/protheeuz/shimmer-alternative
 
@@ -17,13 +17,10 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^1.0.0
 
-# The following section is specific to Flutter.
 flutter:
 
-  # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/qr_code.png
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

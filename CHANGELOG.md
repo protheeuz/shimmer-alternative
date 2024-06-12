@@ -7,6 +7,7 @@
 
 ### Changed
 - Replaced `headline4` with `headlineMedium` to support the latest version of Flutter.
+- Fixed overflow issue in main example.
 
 ### Fixed
 - Fixed static analysis errors.

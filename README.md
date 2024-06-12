@@ -38,7 +38,7 @@ To use this package, add `shimmer_alternative` as a dependency in your `pubspec.
 
 ```yaml
 dependencies:
-  shimmer_alternative: ^0.0.3
+  shimmer_alternative: ^0.0.5
 ```
 
 ### Usage
