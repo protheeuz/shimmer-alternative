@@ -3,7 +3,7 @@ library shimmer_alternative;
 import 'package:flutter/material.dart';
 
 /// A widget that applies a shimmer effect to its child.
-class ShimmerAlternative extends StatelessWidget {
+class ShimmerAlternative extends StatefulWidget {
   /// Creates a [ShimmerAlternative] widget.
   const ShimmerAlternative({
     Key? key,
@@ -18,6 +18,10 @@ class ShimmerAlternative extends StatelessWidget {
     this.customShapeBuilder,
     this.onAnimationStart,
     this.onAnimationStop,
+    this.colorInterpolation = 0.5,
+    this.opacity = 1.0,
+    this.loopCount = 0,
+    this.easing = Curves.linear,
   }) : super(key: key);
 
   /// The widget below this widget in the tree.
@@ -53,102 +57,34 @@ class ShimmerAlternative extends StatelessWidget {
   /// Callback when the animation stops.
   final VoidCallback? onAnimationStop;
 
-  @override
-  Widget build(BuildContext context) {
-    final Color adjustedBaseColor = isDarkMode ? Colors.grey[800]! : baseColor;
-    final Color adjustedHighlightColor =
-        isDarkMode ? Colors.grey[600]! : highlightColor;
+  /// The interpolation factor for color blending.
+  final double colorInterpolation;
 
-    return RepaintBoundary(
-      child: _Shimmer.fromColors(
-        baseColor: adjustedBaseColor,
-        highlightColor: adjustedHighlightColor,
-        customGradient: customGradient,
-        child: child,
-        duration: duration,
-        direction: direction,
-        shape: shape,
-        customShapeBuilder: customShapeBuilder,
-        onAnimationStart: onAnimationStart,
-        onAnimationStop: onAnimationStop,
-      ),
-    );
-  }
-}
+  /// The opacity of the shimmer effect.
+  final double opacity;
 
-/// The direction of the shimmer animation.
-enum ShimmerDirection { ltr, rtl, ttb, btt }
+  /// The number of times the animation should loop.
+  final int loopCount;
 
-/// The shape of the shimmer effect.
-enum ShimmerShape { rectangle, circle, custom }
-
-/// Callback function for custom shape drawing.
-typedef CustomShapeBuilder = void Function(
-    Canvas canvas, Size size, Paint paint);
-
-class _Shimmer extends StatefulWidget {
-  const _Shimmer({
-    required this.child,
-    required this.baseColor,
-    required this.highlightColor,
-    required this.duration,
-    required this.direction,
-    required this.shape,
-    this.customGradient,
-    this.customShapeBuilder,
-    this.onAnimationStart,
-    this.onAnimationStop,
-  });
-
-  static Widget fromColors({
-    required Widget child,
-    required Color baseColor,
-    required Color highlightColor,
-    Duration duration = const Duration(milliseconds: 1500),
-    ShimmerDirection direction = ShimmerDirection.ltr,
-    ShimmerShape shape = ShimmerShape.rectangle,
-    Gradient? customGradient,
-    CustomShapeBuilder? customShapeBuilder,
-    VoidCallback? onAnimationStart,
-    VoidCallback? onAnimationStop,
-  }) {
-    return _Shimmer(
-      child: child,
-      baseColor: baseColor,
-      highlightColor: highlightColor,
-      duration: duration,
-      direction: direction,
-      shape: shape,
-      customGradient: customGradient,
-      customShapeBuilder: customShapeBuilder,
-      onAnimationStart: onAnimationStart,
-      onAnimationStop: onAnimationStop,
-    );
-  }
-
-  final Widget child;
-  final Color baseColor;
-  final Color highlightColor;
-  final Duration duration;
-  final ShimmerDirection direction;
-  final ShimmerShape shape;
-  final Gradient? customGradient;
-  final CustomShapeBuilder? customShapeBuilder;
-  final VoidCallback? onAnimationStart;
-  final VoidCallback? onAnimationStop;
+  /// The easing curve for the animation.
+  final Curve easing;
 
   @override
-  _ShimmerState createState() => _ShimmerState();
+  ShimmerAlternativeState createState() => ShimmerAlternativeState();
 }
 
-class _ShimmerState extends State<_Shimmer>
+/// The state class for [ShimmerAlternative].
+class ShimmerAlternativeState extends State<ShimmerAlternative>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration)
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.duration,
+    )
       ..repeat()
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.forward) {
@@ -165,37 +101,49 @@ class _ShimmerState extends State<_Shimmer>
     super.dispose();
   }
 
+  /// Pauses the shimmer animation.
+  void pauseAnimation() {
+    _controller.stop();
+  }
+
+  /// Resumes the shimmer animation.
+  void resumeAnimation() {
+    _controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      child: widget.child,
-      builder: (BuildContext context, Widget? child) {
-        return ShaderMask(
-          shaderCallback: (Rect bounds) {
-            final Gradient gradient = widget.customGradient ??
-                LinearGradient(
-                  begin: _getGradientBegin(),
-                  end: _getGradientEnd(),
-                  colors: <Color>[
-                    widget.baseColor,
-                    widget.highlightColor,
-                    widget.baseColor,
-                  ],
-                  stops: <double>[
-                    _controller.value - 0.3,
-                    _controller.value,
-                    _controller.value + 0.3,
-                  ],
-                );
-            return gradient.createShader(bounds);
-          },
-          child: CustomPaint(
-            painter: _ShimmerPainter(widget.shape, widget.customShapeBuilder),
-            child: child,
-          ),
-        );
-      },
+    final Color adjustedBaseColor =
+        widget.isDarkMode ? Colors.grey[800]! : widget.baseColor;
+    final Color adjustedHighlightColor =
+        widget.isDarkMode ? Colors.grey[600]! : widget.highlightColor;
+
+    return RepaintBoundary(
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          final Gradient gradient = widget.customGradient ??
+              LinearGradient(
+                begin: _getGradientBegin(),
+                end: _getGradientEnd(),
+                colors: <Color>[
+                  adjustedBaseColor.withOpacity(widget.colorInterpolation),
+                  adjustedHighlightColor.withOpacity(widget.colorInterpolation),
+                  adjustedBaseColor.withOpacity(widget.colorInterpolation),
+                ],
+                stops: <double>[
+                  _controller.value - 0.3,
+                  _controller.value,
+                  _controller.value + 0.3,
+                ],
+              );
+          return gradient.createShader(bounds);
+        },
+        blendMode: BlendMode.srcATop,
+        child: CustomPaint(
+          painter: _ShimmerPainter(widget.shape, widget.customShapeBuilder),
+          child: widget.child,
+        ),
+      ),
     );
   }
 
@@ -227,6 +175,16 @@ class _ShimmerState extends State<_Shimmer>
     }
   }
 }
+
+/// The direction of the shimmer animation.
+enum ShimmerDirection { ltr, rtl, ttb, btt }
+
+/// The shape of the shimmer effect.
+enum ShimmerShape { rectangle, circle, custom }
+
+/// Callback function for custom shape drawing.
+typedef CustomShapeBuilder = void Function(
+    Canvas canvas, Size size, Paint paint);
 
 /// Painter class for custom shimmer shapes.
 class _ShimmerPainter extends CustomPainter {
