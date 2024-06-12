@@ -48,7 +48,8 @@ class ShimmerAlternative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final adjustedBaseColor = isDarkMode ? Colors.grey[800]! : baseColor;
-    final adjustedHighlightColor = isDarkMode ? Colors.grey[600]! : highlightColor;
+    final adjustedHighlightColor =
+        isDarkMode ? Colors.grey[600]! : highlightColor;
 
     return _Shimmer.fromColors(
       baseColor: adjustedBaseColor,
@@ -70,7 +71,8 @@ enum ShimmerDirection { ltr, rtl, ttb, btt }
 enum ShimmerShape { rectangle, circle, custom }
 
 /// Callback function for custom shape drawing.
-typedef CustomShapeBuilder = void Function(Canvas canvas, Size size, Paint paint);
+typedef CustomShapeBuilder = void Function(
+    Canvas canvas, Size size, Paint paint);
 
 class _Shimmer extends StatefulWidget {
   final Widget child;
@@ -119,13 +121,15 @@ class _Shimmer extends StatefulWidget {
   _ShimmerState createState() => _ShimmerState();
 }
 
-class _ShimmerState extends State<_Shimmer> with SingleTickerProviderStateMixin {
+class _ShimmerState extends State<_Shimmer>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration)..repeat();
+    _controller = AnimationController(vsync: this, duration: widget.duration)
+      ..repeat();
   }
 
   @override
