@@ -285,11 +285,10 @@ If you find this project useful and would like to support its ongoing developmen
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/iqbalfauzien)
 [PayPal](https://www.paypal.com/paypalme/iqbalfauzien)
 
-<img src="assets/paypal_qr_code.png" alt="PayPal QR Code" width="290" height="290"/>
+![PayPal QR Code](assets/paypal_qr_code.png)
 
 [Saweria](https://saweria.co/iqbalfauzien)
 ![Saweria QR Code](assets/qr_code.png)
-
 
 
 ## Contribution Guidelines
