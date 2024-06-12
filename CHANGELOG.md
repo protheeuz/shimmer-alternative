@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.0.7] - 2024-06-13
+### Added
+- Added color interpolation feature.
+- Added opacity control for shimmer effect.
+- Added loop count and easing curve support for shimmer animation.
+- Added pause and resume animation control.
+- Added detailed example usage for new features.
+
+### Changed
+- Improved performance with RepaintBoundary.
+- Optimized gradient creation in shaderCallback.
+
+### Fixed
+- Fixed issues with custom gradients in certain configurations.
+
 ## [0.0.6+1] - 2024-06-12
 ### Fixed
 - Fixed linting issues by specifying type annotations and sorting constructor declarations.
