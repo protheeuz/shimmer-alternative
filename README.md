@@ -283,7 +283,7 @@ A: You can set the isDarkMode property to true to automatically adjust the color
 ## Support the Project
 If you find this project useful and would like to support its ongoing development, consider making a donation.
 [Saweria](https://saweria.co/iqbalfauzien)
-[QR Code](https://saweria.co/widgets/qr?streamKey=5fd173da0ac17c95abcd0c4dd3b8e76d)
+![Saweria QR Code](assets/qr_code.png)
 
 ## Contribution Guidelines
 
