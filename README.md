@@ -180,7 +180,7 @@ A: Yes, you can use ShimmerAlternative with any widget.
 A: You can set the shape property to ShimmerShape.custom and implement custom drawing logic in the _ShimmerPainter class.
 
 
-### Contribution Guidelines
+## Contribution Guidelines
 
 Thank you for considering contributing to Shimmer Alternative! Here are some guidelines to help you get started:
 
