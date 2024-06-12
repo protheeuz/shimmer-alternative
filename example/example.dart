@@ -23,10 +23,8 @@ class MyApp extends StatelessWidget {
                 shape: ShimmerShape.rectangle,
                 isDarkMode: true,
                 onAnimationStart: () {
-                  print('Shimmer animation started');
                 },
                 onAnimationStop: () {
-                  print('Shimmer animation stopped');
                 },
                 child: Container(
                   width: double.infinity,
@@ -40,10 +38,8 @@ class MyApp extends StatelessWidget {
                 direction: ShimmerDirection.btt,
                 shape: ShimmerShape.circle,
                 onAnimationStart: () {
-                  print('Shimmer animation started');
                 },
                 onAnimationStop: () {
-                  print('Shimmer animation stopped');
                 },
                 child: Container(
                   width: 100.0,
@@ -65,10 +61,8 @@ class MyApp extends StatelessWidget {
                   canvas.drawPath(path, paint);
                 },
                 onAnimationStart: () {
-                  print('Shimmer animation started');
                 },
                 onAnimationStop: () {
-                  print('Shimmer animation stopped');
                 },
                 child: TextField(
                   decoration: InputDecoration(
@@ -86,10 +80,8 @@ class MyApp extends StatelessWidget {
                   stops: [0.4, 0.5, 0.6],
                 ),
                 onAnimationStart: () {
-                  print('Shimmer animation started');
                 },
                 onAnimationStop: () {
-                  print('Shimmer animation stopped');
                 },
                 child: Container(
                   width: double.infinity,
