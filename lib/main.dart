@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_alternative/shimmer_alternative.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView( // Tambahkan SingleChildScrollView di sini
+          child: SingleChildScrollView( 
             child: Column(
               children: [
                 ShimmerAlternative(
