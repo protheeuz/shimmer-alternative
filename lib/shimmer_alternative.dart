@@ -19,6 +19,9 @@ class ShimmerAlternative extends StatelessWidget {
   /// The direction of the shimmer animation.
   final ShimmerDirection direction;
 
+  /// The shape of the shimmer effect.
+  final ShimmerShape shape;
+
   /// Creates a [ShimmerAlternative] widget.
   const ShimmerAlternative({
     Key? key,
@@ -27,6 +30,7 @@ class ShimmerAlternative extends StatelessWidget {
     this.highlightColor = const Color(0xFFF5F5F5),
     this.duration = const Duration(milliseconds: 1500),
     this.direction = ShimmerDirection.ltr,
+    this.shape = ShimmerShape.rectangle,
   }) : super(key: key);
 
   @override
@@ -37,6 +41,7 @@ class ShimmerAlternative extends StatelessWidget {
       child: child,
       duration: duration,
       direction: direction,
+      shape: shape,
     );
   }
 }
@@ -44,12 +49,16 @@ class ShimmerAlternative extends StatelessWidget {
 /// The direction of the shimmer animation.
 enum ShimmerDirection { ltr, rtl, ttb, btt }
 
+/// The shape of the shimmer effect.
+enum ShimmerShape { rectangle, circle, custom }
+
 class _Shimmer extends StatefulWidget {
   final Widget child;
   final Color baseColor;
   final Color highlightColor;
   final Duration duration;
   final ShimmerDirection direction;
+  final ShimmerShape shape;
 
   const _Shimmer({
     required this.child,
@@ -57,6 +66,7 @@ class _Shimmer extends StatefulWidget {
     required this.highlightColor,
     required this.duration,
     required this.direction,
+    required this.shape,
   });
 
   static Widget fromColors({
@@ -65,6 +75,7 @@ class _Shimmer extends StatefulWidget {
     required Color highlightColor,
     Duration duration = const Duration(milliseconds: 1500),
     ShimmerDirection direction = ShimmerDirection.ltr,
+    ShimmerShape shape = ShimmerShape.rectangle,
   }) {
     return _Shimmer(
       child: child,
@@ -72,6 +83,7 @@ class _Shimmer extends StatefulWidget {
       highlightColor: highlightColor,
       duration: duration,
       direction: direction,
+      shape: shape,
     );
   }
 
@@ -172,9 +184,44 @@ class _ShimmerState extends State<_Shimmer> with SingleTickerProviderStateMixin 
             }
             return gradient.createShader(bounds);
           },
-          child: child,
+          child: CustomPaint(
+            painter: _ShimmerPainter(widget.shape),
+            child: child,
+          ),
         );
       },
     );
+  }
+}
+
+/// Painter class for custom shimmer shapes.
+class _ShimmerPainter extends CustomPainter {
+  final ShimmerShape shape;
+
+  _ShimmerPainter(this.shape);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill;
+
+    switch (shape) {
+      case ShimmerShape.circle:
+        canvas.drawCircle(size.center(Offset.zero), size.width / 2, paint);
+        break;
+      case ShimmerShape.custom:
+        // Add custom shape drawing logic here
+        break;
+      case ShimmerShape.rectangle:
+      default:
+        canvas.drawRect(Offset.zero & size, paint);
+        break;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
