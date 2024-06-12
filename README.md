@@ -26,6 +26,7 @@ Properties ShimmerDirection
 - Customizable shimmer colors
 - Adjustable shimmer speed
 - Support for multiple directions (left-to-right, right-to-left, top-to-bottom, bottom-to-top)
+- Support for multiple shapes (rectangle, circle, custom)
 - Easy integration with existing widgets
 - Lightweight and highly customizable
 
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
               ShimmerAlternative(
                 duration: Duration(seconds: 2),
                 direction: ShimmerDirection.ttb,
+                shape: ShimmerShape.rectangle,
                 child: Container(
                   width: double.infinity,
                   height: 150.0,
@@ -72,19 +74,18 @@ class MyApp extends StatelessWidget {
               ShimmerAlternative(
                 duration: Duration(seconds: 3),
                 direction: ShimmerDirection.btt,
-                child: Text(
-                  'Loading text...',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[300],
-                  ),
+                shape: ShimmerShape.circle,
+                child: Container(
+                  width: 100.0,
+                  height: 100.0,
+                  color: Colors.grey[300],
                 ),
               ),
               SizedBox(height: 20),
               ShimmerAlternative(
                 duration: Duration(seconds: 1),
                 direction: ShimmerDirection.rtl,
+                shape: ShimmerShape.custom, // Add custom shape logic in the painter
                 child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -146,23 +147,40 @@ ShimmerAlternative(
 );
 ```
 
+### Shimmer Shape
+You can change the shape of the shimmer effect using the shape parameter:
+
+```dart
+ShimmerAlternative(
+  shape: ShimmerShape.circle,
+  child: Container(
+    width: 100.0,
+    height: 100.0,
+    color: Colors.grey[300],
+  ),
+);
+```
+
 ## FAQ
 
 **Q: How do I customize the shimmer colors?**
 
-A: You can customize the shimmer colors by setting the `baseColor` and `highlightColor` properties.
+A: You can customize the shimmer colors by setting the baseColor and highlightColor properties.
 
 **Q: How do I change the speed of the shimmer animation?**
 
-A: You can change the speed by setting the `duration` property.
+A: You can change the speed by setting the duration property.
 
 **Q: Can I use ShimmerAlternative with other widgets like ListView or GridView?**
 
 A: Yes, you can use ShimmerAlternative with any widget.
 
+**Q: How do I use custom shapes in the shimmer effect?**
+
+A: You can set the shape property to ShimmerShape.custom and implement custom drawing logic in the _ShimmerPainter class.
+
 
 ### Contribution Guidelines
-## Contribution Guidelines
 
 Thank you for considering contributing to Shimmer Alternative! Here are some guidelines to help you get started:
 
