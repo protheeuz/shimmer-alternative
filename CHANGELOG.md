@@ -10,6 +10,10 @@
 ### Changed
 - Optimized animation control in `TestableShimmer` for precise testing.
 - Enhanced example application to showcase various configurations and new callback features.
+- Improved test coverage for various ShimmerAlternative configurations.
+
+### Fixed
+- Fixed onAnimationStop callback test to ensure accurate triggering of the callback.
 
 ## [0.0.5] - 2024-06-12
 ### Added
@@ -30,10 +34,12 @@
 - Added unit tests for dark mode and custom gradient features.
 - Documentation updates for new features.
 - Updated example to demonstrate new features.
+
 ## [0.0.2] - 2024-06-12
 ### Added
 - Support for custom shapes (rectangle, circle, custom) in ShimmerAlternative.
 - Documentation updates for new features.
+
 ## [0.0.1] - 2024-06-12
 - Initial release of Shimmer Alternative.
 - Added customizable shimmer colors, speed, and direction.
