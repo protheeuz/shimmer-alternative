@@ -38,15 +38,6 @@ dependencies:
   shimmer_alternative: ^0.0.1
 ```
 
-## Getting Started
-
-To use this package, add `shimmer_alternative` as a dependency in your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  shimmer_alternative: ^0.0.1
-```
-
 ### Usage
 Here is a simple example of how to use Shimmer Alternative:
 
