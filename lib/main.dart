@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: <Widget>[
                 ShimmerAlternative(
                   duration: const Duration(seconds: 2),
                   direction: ShimmerDirection.ttb,
@@ -63,8 +63,8 @@ class MyApp extends StatelessWidget {
                 const SizedBox(height: 20),
                 ShimmerAlternative(
                   customGradient: const LinearGradient(
-                    colors: [Colors.red, Colors.blue, Colors.green],
-                    stops: [0.4, 0.5, 0.6],
+                    colors: <Color>[Colors.red, Colors.blue, Colors.green],
+                    stops: <double>[0.4, 0.5, 0.6],
                   ),
                   child: Container(
                     width: double.infinity,
