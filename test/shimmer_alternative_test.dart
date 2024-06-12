@@ -269,6 +269,37 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     expect(animationStopped, isTrue);
   });
+
+  testWidgets('ShimmerAlternative supports pause and resume',
+      (WidgetTester tester) async {
+    final GlobalKey<TestableShimmerState> shimmerKey =
+        GlobalKey<TestableShimmerState>();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: TestableShimmer(
+            key: shimmerKey,
+            child: Container(
+              width: 100,
+              height: 100,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Pause animation
+    shimmerKey.currentState?.pauseAnimation();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(shimmerKey.currentState?._controller.isAnimating, isFalse);
+
+    // Resume animation
+    shimmerKey.currentState?.resumeAnimation();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(shimmerKey.currentState?._controller.isAnimating, isTrue);
+  });
 }
 
 /// A testable shimmer widget for triggering animation callbacks.
@@ -342,6 +373,14 @@ class TestableShimmerState extends State<TestableShimmer>
     widget.onAnimationStop?.call();
   }
 
+  void pauseAnimation() {
+    _controller.stop();
+  }
+
+  void resumeAnimation() {
+    _controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -355,9 +394,9 @@ class TestableShimmerState extends State<TestableShimmer>
                   begin: _getGradientBegin(),
                   end: _getGradientEnd(),
                   colors: <Color>[
-                    widget.baseColor,
-                    widget.highlightColor,
-                    widget.baseColor,
+                    widget.baseColor.withOpacity(0.5),
+                    widget.highlightColor.withOpacity(0.5),
+                    widget.baseColor.withOpacity(0.5),
                   ],
                   stops: <double>[
                     _controller.value - 0.3,
@@ -367,6 +406,7 @@ class TestableShimmerState extends State<TestableShimmer>
                 );
             return gradient.createShader(bounds);
           },
+          blendMode: BlendMode.srcATop,
           child: CustomPaint(
             painter: _ShimmerPainter(widget.shape, widget.customShapeBuilder),
             child: child,
