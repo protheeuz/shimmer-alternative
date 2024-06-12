@@ -5,12 +5,8 @@
 
 Shimmer Alternative is a Flutter package designed to provide beautiful shimmer effects for loading states in your apps. This package is perfect for adding visually appealing animations to your cards, containers, text, and text fields, making the loading experience more engaging for users.
 
-```markdown
-## API Reference
-
-### ShimmerAlternative
-
-#### Properties
+```
+Properties Properties
 
 - `child` (Widget): The widget below this widget in the tree.
 - `baseColor` (Color): The base color of the shimmer effect.
@@ -18,7 +14,7 @@ Shimmer Alternative is a Flutter package designed to provide beautiful shimmer e
 - `duration` (Duration): The duration of the shimmer animation.
 - `direction` (ShimmerDirection): The direction of the shimmer animation.
 
-#### ShimmerDirection
+Properties ShimmerDirection
 
 - `ltr`: Left to right.
 - `rtl`: Right to left.
