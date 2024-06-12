@@ -38,7 +38,7 @@ To use this package, add `shimmer_alternative` as a dependency in your `pubspec.
 
 ```yaml
 dependencies:
-  shimmer_alternative: ^0.0.5
+  shimmer_alternative: ^0.0.6
 ```
 
 ### Usage
@@ -282,8 +282,11 @@ A: You can set the isDarkMode property to true to automatically adjust the color
 
 ## Support the Project
 If you find this project useful and would like to support its ongoing development, consider making a donation.
-[Saweria](https://saweria.co/iqbalfauzien)
+
+
 ![Saweria QR Code](assets/qr_code.png)
+[Saweria](https://saweria.co/iqbalfauzien)
+
 
 ## Contribution Guidelines
 
