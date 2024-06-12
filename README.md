@@ -139,8 +139,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 ```
+
 ### Customization
 Shimmer Colors
 You can customize the base color and highlight color of the shimmer effect:
@@ -251,7 +251,6 @@ ShimmerAlternative(
   ),
 );
 ```
-
 
 ## FAQ
 
