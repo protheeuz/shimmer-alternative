@@ -51,42 +51,72 @@ import 'package:shimmer_alternative/shimmer_alternative.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Shimmer Alternative Example'),
+          title: const Text('Shimmer Alternative Example'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               ShimmerAlternative(
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 direction: ShimmerDirection.ttb,
-                shape: ShimmerShape.rectangle,
+                isDarkMode: true,
                 child: Container(
                   width: double.infinity,
                   height: 150.0,
                   color: Colors.grey[300],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ShimmerAlternative(
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
                 direction: ShimmerDirection.btt,
-                shape: ShimmerShape.circle,
+                child: const Text(
+                  'Loading text...',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ShimmerAlternative(
+                duration: const Duration(seconds: 1),
+                direction: ShimmerDirection.rtl,
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Loading...',
+                    fillColor: Colors.grey[300],
+                    filled: true,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ShimmerAlternative(
+                customGradient: const LinearGradient(
+                  colors: [Colors.red, Colors.blue, Colors.green],
+                  stops: [0.4, 0.5, 0.6],
+                ),
                 child: Container(
-                  width: 100.0,
-                  height: 100.0,
+                  width: double.infinity,
+                  height: 150.0,
                   color: Colors.grey[300],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ShimmerAlternative(
-                duration: Duration(seconds: 1),
-                direction: ShimmerDirection.rtl,
                 shape: ShimmerShape.custom,
                 customShapeBuilder: (canvas, size, paint) {
                   Path path = Path();
@@ -96,13 +126,10 @@ class MyApp extends StatelessWidget {
                   path.close();
                   canvas.drawPath(path, paint);
                 },
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Loading...',
-                    fillColor: Colors.grey[300],
-                    filled: true,
-                  ),
+                child: Container(
+                  width: double.infinity,
+                  height: 150.0,
+                  color: Colors.grey[300],
                 ),
               ),
             ],
@@ -252,6 +279,11 @@ A: You can set the customGradient property to define a custom gradient.
 
 A: You can set the isDarkMode property to true to automatically adjust the colors for dark mode.
 
+
+## Support the Project
+If you find this project useful and would like to support its ongoing development, consider making a donation.
+[Saweria](https://saweria.co/iqbalfauzien)
+[QR Code](https://saweria.co/widgets/qr?streamKey=5fd173da0ac17c95abcd0c4dd3b8e76d)
 
 ## Contribution Guidelines
 
