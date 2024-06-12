@@ -1,6 +1,6 @@
 # Shimmer Alternative
 ![Pub Version](https://img.shields.io/pub/v/shimmer_alternative)
-![Build Status](https://github.com/protheeuz/shimmer-alternative/workflows/Build/badge.svg)
+[![Build](https://github.com/protheeuz/shimmer-alternative/actions/workflows/build.yml/badge.svg)](https://github.com/protheeuz/shimmer-alternative/actions/workflows/build.yml)
 ![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)
 
 Shimmer Alternative is a Flutter package designed to provide beautiful shimmer effects for loading states in your apps. This package is perfect for adding visually appealing animations to your cards, containers, text, and text fields, making the loading experience more engaging for users.
