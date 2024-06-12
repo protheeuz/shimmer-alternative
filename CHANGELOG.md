@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.5] - 2024-06-12
+### Added
+- Added support for custom gradients.
+- Added support for dark mode.
+
+### Changed
+- Replaced `headline4` with `headlineMedium` to support the latest version of Flutter.
+
+### Fixed
+- Fixed static analysis errors.
 
 ## [0.0.3] - 2024-06-12
 ### Added
