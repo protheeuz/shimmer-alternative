@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shimmer_alternative/shimmer_alternative.dart';
 
 void main() {
-  testWidgets('ShimmerAlternative renders correctly', (WidgetTester tester) async {
-    const testKey = Key('shimmer');
+  testWidgets('ShimmerAlternative renders correctly',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -24,8 +25,9 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative applies shimmer effect', (WidgetTester tester) async {
-    const testKey = Key('shimmer_effect');
+  testWidgets('ShimmerAlternative applies shimmer effect',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_effect');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -42,7 +44,7 @@ void main() {
       ),
     );
 
-    final shaderMaskFinder = find.descendant(
+    final Finder shaderMaskFinder = find.descendant(
       of: find.byKey(testKey),
       matching: find.byType(ShaderMask),
     );
@@ -50,8 +52,9 @@ void main() {
     expect(shaderMaskFinder, findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative works with Text widget', (WidgetTester tester) async {
-    const testKey = Key('shimmer_text');
+  testWidgets('ShimmerAlternative works with Text widget',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_text');
 
     await tester.pumpWidget(
       const MaterialApp(
@@ -70,8 +73,9 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative applies configurable speed', (WidgetTester tester) async {
-    const testKey = Key('shimmer_speed');
+  testWidgets('ShimmerAlternative applies configurable speed',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_speed');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -92,8 +96,9 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative applies custom direction', (WidgetTester tester) async {
-    const testKey = Key('shimmer_direction');
+  testWidgets('ShimmerAlternative applies custom direction',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_direction');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -114,8 +119,9 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative supports dark mode', (WidgetTester tester) async {
-    const testKey = Key('shimmer_dark_mode');
+  testWidgets('ShimmerAlternative supports dark mode',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_dark_mode');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -137,8 +143,9 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative supports custom gradient', (WidgetTester tester) async {
-    const testKey = Key('shimmer_custom_gradient');
+  testWidgets('ShimmerAlternative supports custom gradient',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_custom_gradient');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -146,8 +153,8 @@ void main() {
           body: ShimmerAlternative(
             key: testKey,
             customGradient: const LinearGradient(
-              colors: [Colors.red, Colors.blue, Colors.green],
-              stops: [0.4, 0.5, 0.6],
+              colors: <Color>[Colors.red, Colors.blue, Colors.green],
+              stops: <double>[0.4, 0.5, 0.6],
             ),
             child: Container(
               width: 100,
@@ -159,7 +166,7 @@ void main() {
       ),
     );
 
-    final shaderMaskFinder = find.descendant(
+    final Finder shaderMaskFinder = find.descendant(
       of: find.byKey(testKey),
       matching: find.byType(ShaderMask),
     );
@@ -167,8 +174,9 @@ void main() {
     expect(shaderMaskFinder, findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative applies custom shape', (WidgetTester tester) async {
-    const testKey = Key('shimmer_custom_shape');
+  testWidgets('ShimmerAlternative applies custom shape',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_custom_shape');
 
     await tester.pumpWidget(
       MaterialApp(
@@ -176,8 +184,8 @@ void main() {
           body: ShimmerAlternative(
             key: testKey,
             shape: ShimmerShape.custom,
-            customShapeBuilder: (canvas, size, paint) {
-              Path path = Path();
+            customShapeBuilder: (Canvas canvas, Size size, Paint paint) {
+              final Path path = Path();
               path.moveTo(size.width * 0.5, 0);
               path.lineTo(size.width, size.height);
               path.lineTo(0, size.height);
@@ -197,8 +205,9 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('ShimmerAlternative triggers onAnimationStart callback', (WidgetTester tester) async {
-    const testKey = Key('shimmer_animation_start');
+  testWidgets('ShimmerAlternative triggers onAnimationStart callback',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_animation_start');
     bool animationStarted = false;
 
     await tester.pumpWidget(
@@ -220,15 +229,17 @@ void main() {
     );
 
     // Access the state and start the animation manually
-    final state = tester.state<TestableShimmerState>(find.byKey(testKey));
+    final TestableShimmerState state =
+        tester.state<TestableShimmerState>(find.byKey(testKey));
     state.startAnimation();
 
     await tester.pump(const Duration(milliseconds: 100));
     expect(animationStarted, isTrue);
   });
 
-  testWidgets('ShimmerAlternative triggers onAnimationStop callback', (WidgetTester tester) async {
-    const testKey = Key('shimmer_animation_stop');
+  testWidgets('ShimmerAlternative triggers onAnimationStop callback',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer_animation_stop');
     bool animationStopped = false;
 
     await tester.pumpWidget(
@@ -251,7 +262,8 @@ void main() {
     );
 
     // Access the state and stop the animation manually
-    final state = tester.state<TestableShimmerState>(find.byKey(testKey));
+    final TestableShimmerState state =
+        tester.state<TestableShimmerState>(find.byKey(testKey));
     state.stopAnimation();
 
     await tester.pump(const Duration(milliseconds: 500));
@@ -259,6 +271,7 @@ void main() {
   });
 }
 
+/// A testable shimmer widget for triggering animation callbacks.
 class TestableShimmer extends StatefulWidget {
   const TestableShimmer({
     Key? key,
@@ -291,18 +304,21 @@ class TestableShimmer extends StatefulWidget {
   TestableShimmerState createState() => TestableShimmerState();
 }
 
+/// State class for the testable shimmer widget.
 class TestableShimmerState extends State<TestableShimmer>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: widget.duration)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.forward || status == AnimationStatus.reverse) {
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.forward ||
+            status == AnimationStatus.reverse) {
           widget.onAnimationStart?.call();
-        } else if (status == AnimationStatus.dismissed || status == AnimationStatus.completed) {
+        } else if (status == AnimationStatus.dismissed ||
+            status == AnimationStatus.completed) {
           widget.onAnimationStop?.call();
         }
       });
@@ -315,10 +331,12 @@ class TestableShimmerState extends State<TestableShimmer>
     super.dispose();
   }
 
+  /// Starts the shimmer animation.
   void startAnimation() {
     _controller.repeat();
   }
 
+  /// Stops the shimmer animation.
   void stopAnimation() {
     _controller.stop();
     widget.onAnimationStop?.call();
@@ -329,19 +347,19 @@ class TestableShimmerState extends State<TestableShimmer>
     return AnimatedBuilder(
       animation: _controller,
       child: widget.child,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return ShaderMask(
-          shaderCallback: (bounds) {
-            final gradient = widget.customGradient ??
+          shaderCallback: (Rect bounds) {
+            final Gradient gradient = widget.customGradient ??
                 LinearGradient(
                   begin: _getGradientBegin(),
                   end: _getGradientEnd(),
-                  colors: [
+                  colors: <Color>[
                     widget.baseColor,
                     widget.highlightColor,
                     widget.baseColor,
                   ],
-                  stops: [
+                  stops: <double>[
                     _controller.value - 0.3,
                     _controller.value,
                     _controller.value + 0.3,
@@ -396,7 +414,7 @@ class _ShimmerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
+    final Paint paint = Paint()
       ..color = Colors.grey
       ..style = PaintingStyle.fill;
 

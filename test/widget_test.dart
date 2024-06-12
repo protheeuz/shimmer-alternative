@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shimmer_alternative/shimmer_alternative.dart';
 
 void main() {
-  testWidgets('ShimmerAlternative renders correctly', (WidgetTester tester) async {
-    const testKey = Key('shimmer');
+  testWidgets('ShimmerAlternative renders correctly',
+      (WidgetTester tester) async {
+    const Key testKey = Key('shimmer');
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(

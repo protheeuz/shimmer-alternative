@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.6+1] - 2024-06-12
+### Fixed
+- Fixed linting issues by specifying type annotations and sorting constructor declarations.
+
 ## [0.0.6] - 2024-06-12
 ### Added
 - Added `onAnimationStart` and `onAnimationStop` callbacks to `ShimmerAlternative` for monitoring animation events.

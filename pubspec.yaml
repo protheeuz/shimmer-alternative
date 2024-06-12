@@ -1,6 +1,6 @@
 name: shimmer_alternative
 description: A Flutter package to show shimmer effect while loading cards, containers, text, and text fields.
-version: 0.0.6 
+version: 0.0.6+1
 homepage: https://github.com/protheeuz/shimmer-alternative
 repository: https://github.com/protheeuz/shimmer-alternative
 

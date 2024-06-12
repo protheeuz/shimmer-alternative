@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_alternative/shimmer_alternative.dart';
 
+/// Entry point of the application.
 void main() => runApp(const MyApp());
 
+/// The main application widget.
 class MyApp extends StatelessWidget {
+  /// Creates a new instance of [MyApp].
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView( 
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 ShimmerAlternative(
@@ -72,8 +75,8 @@ class MyApp extends StatelessWidget {
                 const SizedBox(height: 20),
                 ShimmerAlternative(
                   shape: ShimmerShape.custom,
-                  customShapeBuilder: (canvas, size, paint) {
-                    Path path = Path();
+                  customShapeBuilder: (Canvas canvas, Size size, Paint paint) {
+                    final Path path = Path();
                     path.moveTo(size.width * 0.5, 0);
                     path.lineTo(size.width, size.height);
                     path.lineTo(0, size.height);
