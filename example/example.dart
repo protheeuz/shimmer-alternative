@@ -22,6 +22,12 @@ class MyApp extends StatelessWidget {
                 direction: ShimmerDirection.ttb,
                 shape: ShimmerShape.rectangle,
                 isDarkMode: true,
+                onAnimationStart: () {
+                  print('Shimmer animation started');
+                },
+                onAnimationStop: () {
+                  print('Shimmer animation stopped');
+                },
                 child: Container(
                   width: double.infinity,
                   height: 150.0,
@@ -33,6 +39,12 @@ class MyApp extends StatelessWidget {
                 duration: const Duration(seconds: 3),
                 direction: ShimmerDirection.btt,
                 shape: ShimmerShape.circle,
+                onAnimationStart: () {
+                  print('Shimmer animation started');
+                },
+                onAnimationStop: () {
+                  print('Shimmer animation stopped');
+                },
                 child: Container(
                   width: 100.0,
                   height: 100.0,
@@ -52,6 +64,12 @@ class MyApp extends StatelessWidget {
                   path.close();
                   canvas.drawPath(path, paint);
                 },
+                onAnimationStart: () {
+                  print('Shimmer animation started');
+                },
+                onAnimationStop: () {
+                  print('Shimmer animation stopped');
+                },
                 child: TextField(
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -67,6 +85,12 @@ class MyApp extends StatelessWidget {
                   colors: [Colors.red, Colors.blue, Colors.green],
                   stops: [0.4, 0.5, 0.6],
                 ),
+                onAnimationStart: () {
+                  print('Shimmer animation started');
+                },
+                onAnimationStop: () {
+                  print('Shimmer animation stopped');
+                },
                 child: Container(
                   width: double.infinity,
                   height: 150.0,
