@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
               ShimmerAlternative(
                 duration: const Duration(seconds: 2),
                 direction: ShimmerDirection.ttb,
+                shape: ShimmerShape.rectangle,
+                isDarkMode: true,
                 child: Container(
                   width: double.infinity,
                   height: 150.0,
@@ -30,19 +32,26 @@ class MyApp extends StatelessWidget {
               ShimmerAlternative(
                 duration: const Duration(seconds: 3),
                 direction: ShimmerDirection.btt,
-                child: Text(
-                  'Loading text...',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[300],
-                  ),
+                shape: ShimmerShape.circle,
+                child: Container(
+                  width: 100.0,
+                  height: 100.0,
+                  color: Colors.grey[300],
                 ),
               ),
               const SizedBox(height: 20),
               ShimmerAlternative(
                 duration: const Duration(seconds: 1),
                 direction: ShimmerDirection.rtl,
+                shape: ShimmerShape.custom,
+                customShapeBuilder: (canvas, size, paint) {
+                  Path path = Path();
+                  path.moveTo(size.width * 0.5, 0);
+                  path.lineTo(size.width, size.height);
+                  path.lineTo(0, size.height);
+                  path.close();
+                  canvas.drawPath(path, paint);
+                },
                 child: TextField(
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -50,6 +59,18 @@ class MyApp extends StatelessWidget {
                     fillColor: Colors.grey[300],
                     filled: true,
                   ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ShimmerAlternative(
+                customGradient: const LinearGradient(
+                  colors: [Colors.red, Colors.blue, Colors.green],
+                  stops: [0.4, 0.5, 0.6],
+                ),
+                child: Container(
+                  width: double.infinity,
+                  height: 150.0,
+                  color: Colors.grey[300],
                 ),
               ),
             ],
