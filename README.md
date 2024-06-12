@@ -27,6 +27,8 @@ Properties ShimmerDirection
 - Adjustable shimmer speed
 - Support for multiple directions (left-to-right, right-to-left, top-to-bottom, bottom-to-top)
 - Support for multiple shapes (rectangle, circle, custom)
+- Custom gradient support
+- Automatic dark mode adjustment
 - Easy integration with existing widgets
 - Lightweight and highly customizable
 
@@ -85,7 +87,15 @@ class MyApp extends StatelessWidget {
               ShimmerAlternative(
                 duration: Duration(seconds: 1),
                 direction: ShimmerDirection.rtl,
-                shape: ShimmerShape.custom, // Add custom shape logic in the painter
+                shape: ShimmerShape.custom,
+                customShapeBuilder: (canvas, size, paint) {
+                  Path path = Path();
+                  path.moveTo(size.width * 0.5, 0);
+                  path.lineTo(size.width, size.height);
+                  path.lineTo(0, size.height);
+                  path.close();
+                  canvas.drawPath(path, paint);
+                },
                 child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -102,6 +112,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 ```
 ### Customization
 Shimmer Colors
@@ -161,6 +172,60 @@ ShimmerAlternative(
 );
 ```
 
+### Shimmer Gradient
+You can use a custom gradient for the shimmer effect by setting the customGradient parameter:
+
+```dart
+ShimmerAlternative(
+  customGradient: LinearGradient(
+    colors: [Colors.red, Colors.blue, Colors.green],
+    stops: [0.4, 0.5, 0.6],
+  ),
+  child: Container(
+    width: double.infinity,
+    height: 150.0,
+    color: Colors.grey[300],
+  ),
+);
+```
+
+### Dark Mode Adjustment
+You can automatically adjust the colors for dark mode by setting the isDarkMode parameter:
+
+```dart
+ShimmerAlternative(
+  isDarkMode: true,
+  child: Container(
+    width: double.infinity,
+    height: 150.0,
+    color: Colors.grey[300],
+  ),
+);
+```
+
+### Custom Shape
+You can define a custom shape for the shimmer effect by using the customShapeBuilder parameter:
+
+```dart
+ShimmerAlternative(
+  shape: ShimmerShape.custom,
+  customShapeBuilder: (canvas, size, paint) {
+    Path path = Path();
+    path.moveTo(size.width * 0.5, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    canvas.drawPath(path, paint);
+  },
+  child: Container(
+    width: double.infinity,
+    height: 150.0,
+    color: Colors.grey[300],
+  ),
+);
+```
+
+
 ## FAQ
 
 **Q: How do I customize the shimmer colors?**
@@ -177,7 +242,15 @@ A: Yes, you can use ShimmerAlternative with any widget.
 
 **Q: How do I use custom shapes in the shimmer effect?**
 
-A: You can set the shape property to ShimmerShape.custom and implement custom drawing logic in the _ShimmerPainter class.
+A: You can set the shape property to ShimmerShape.custom and implement custom drawing logic in the customShapeBuilder callback.
+
+**Q: How do I use a custom gradient for the shimmer effect?**
+
+A: You can set the customGradient property to define a custom gradient.
+
+**Q: How do I enable dark mode adjustment?**
+
+A: You can set the isDarkMode property to true to automatically adjust the colors for dark mode.
 
 
 ## Contribution Guidelines

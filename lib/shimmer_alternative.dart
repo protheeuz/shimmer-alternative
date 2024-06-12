@@ -22,6 +22,15 @@ class ShimmerAlternative extends StatelessWidget {
   /// The shape of the shimmer effect.
   final ShimmerShape shape;
 
+  /// The custom gradient of the shimmer effect.
+  final Gradient? customGradient;
+
+  /// Whether to automatically adjust colors for dark mode.
+  final bool isDarkMode;
+
+  /// Custom shape builder callback.
+  final CustomShapeBuilder? customShapeBuilder;
+
   /// Creates a [ShimmerAlternative] widget.
   const ShimmerAlternative({
     Key? key,
@@ -31,17 +40,25 @@ class ShimmerAlternative extends StatelessWidget {
     this.duration = const Duration(milliseconds: 1500),
     this.direction = ShimmerDirection.ltr,
     this.shape = ShimmerShape.rectangle,
+    this.customGradient,
+    this.isDarkMode = false,
+    this.customShapeBuilder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final adjustedBaseColor = isDarkMode ? Colors.grey[800]! : baseColor;
+    final adjustedHighlightColor = isDarkMode ? Colors.grey[600]! : highlightColor;
+
     return _Shimmer.fromColors(
-      baseColor: baseColor,
-      highlightColor: highlightColor,
+      baseColor: adjustedBaseColor,
+      highlightColor: adjustedHighlightColor,
+      customGradient: customGradient,
       child: child,
       duration: duration,
       direction: direction,
       shape: shape,
+      customShapeBuilder: customShapeBuilder,
     );
   }
 }
@@ -52,6 +69,9 @@ enum ShimmerDirection { ltr, rtl, ttb, btt }
 /// The shape of the shimmer effect.
 enum ShimmerShape { rectangle, circle, custom }
 
+/// Callback function for custom shape drawing.
+typedef CustomShapeBuilder = void Function(Canvas canvas, Size size, Paint paint);
+
 class _Shimmer extends StatefulWidget {
   final Widget child;
   final Color baseColor;
@@ -59,6 +79,8 @@ class _Shimmer extends StatefulWidget {
   final Duration duration;
   final ShimmerDirection direction;
   final ShimmerShape shape;
+  final Gradient? customGradient;
+  final CustomShapeBuilder? customShapeBuilder;
 
   const _Shimmer({
     required this.child,
@@ -67,6 +89,8 @@ class _Shimmer extends StatefulWidget {
     required this.duration,
     required this.direction,
     required this.shape,
+    this.customGradient,
+    this.customShapeBuilder,
   });
 
   static Widget fromColors({
@@ -76,6 +100,8 @@ class _Shimmer extends StatefulWidget {
     Duration duration = const Duration(milliseconds: 1500),
     ShimmerDirection direction = ShimmerDirection.ltr,
     ShimmerShape shape = ShimmerShape.rectangle,
+    Gradient? customGradient,
+    CustomShapeBuilder? customShapeBuilder,
   }) {
     return _Shimmer(
       child: child,
@@ -84,6 +110,8 @@ class _Shimmer extends StatefulWidget {
       duration: duration,
       direction: direction,
       shape: shape,
+      customGradient: customGradient,
+      customShapeBuilder: customShapeBuilder,
     );
   }
 
@@ -114,12 +142,10 @@ class _ShimmerState extends State<_Shimmer> with SingleTickerProviderStateMixin 
       builder: (context, child) {
         return ShaderMask(
           shaderCallback: (bounds) {
-            Gradient gradient;
-            switch (widget.direction) {
-              case ShimmerDirection.rtl:
-                gradient = LinearGradient(
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
+            final gradient = widget.customGradient ??
+                LinearGradient(
+                  begin: _getGradientBegin(),
+                  end: _getGradientEnd(),
                   colors: [
                     widget.baseColor,
                     widget.highlightColor,
@@ -131,74 +157,52 @@ class _ShimmerState extends State<_Shimmer> with SingleTickerProviderStateMixin 
                     _controller.value + 0.3,
                   ],
                 );
-                break;
-              case ShimmerDirection.ttb:
-                gradient = LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    widget.baseColor,
-                    widget.highlightColor,
-                    widget.baseColor,
-                  ],
-                  stops: [
-                    _controller.value - 0.3,
-                    _controller.value,
-                    _controller.value + 0.3,
-                  ],
-                );
-                break;
-              case ShimmerDirection.btt:
-                gradient = LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    widget.baseColor,
-                    widget.highlightColor,
-                    widget.baseColor,
-                  ],
-                  stops: [
-                    _controller.value - 0.3,
-                    _controller.value,
-                    _controller.value + 0.3,
-                  ],
-                );
-                break;
-              case ShimmerDirection.ltr:
-              default:
-                gradient = LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    widget.baseColor,
-                    widget.highlightColor,
-                    widget.baseColor,
-                  ],
-                  stops: [
-                    _controller.value - 0.3,
-                    _controller.value,
-                    _controller.value + 0.3,
-                  ],
-                );
-                break;
-            }
             return gradient.createShader(bounds);
           },
           child: CustomPaint(
-            painter: _ShimmerPainter(widget.shape),
+            painter: _ShimmerPainter(widget.shape, widget.customShapeBuilder),
             child: child,
           ),
         );
       },
     );
   }
+
+  Alignment _getGradientBegin() {
+    switch (widget.direction) {
+      case ShimmerDirection.rtl:
+        return Alignment.centerRight;
+      case ShimmerDirection.ttb:
+        return Alignment.topCenter;
+      case ShimmerDirection.btt:
+        return Alignment.bottomCenter;
+      case ShimmerDirection.ltr:
+      default:
+        return Alignment.centerLeft;
+    }
+  }
+
+  Alignment _getGradientEnd() {
+    switch (widget.direction) {
+      case ShimmerDirection.rtl:
+        return Alignment.centerLeft;
+      case ShimmerDirection.ttb:
+        return Alignment.bottomCenter;
+      case ShimmerDirection.btt:
+        return Alignment.topCenter;
+      case ShimmerDirection.ltr:
+      default:
+        return Alignment.centerRight;
+    }
+  }
 }
 
 /// Painter class for custom shimmer shapes.
 class _ShimmerPainter extends CustomPainter {
   final ShimmerShape shape;
+  final CustomShapeBuilder? customShapeBuilder;
 
-  _ShimmerPainter(this.shape);
+  _ShimmerPainter(this.shape, this.customShapeBuilder);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -211,7 +215,9 @@ class _ShimmerPainter extends CustomPainter {
         canvas.drawCircle(size.center(Offset.zero), size.width / 2, paint);
         break;
       case ShimmerShape.custom:
-        // Add custom shape drawing logic here
+        if (customShapeBuilder != null) {
+          customShapeBuilder!(canvas, size, paint);
+        }
         break;
       case ShimmerShape.rectangle:
       default:
