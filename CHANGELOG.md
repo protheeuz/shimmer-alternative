@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.0.6] - 2024-06-12
+### Added
+- Added `onAnimationStart` and `onAnimationStop` callbacks to `ShimmerAlternative` for monitoring animation events.
+- Example usage demonstrating the new callback features.
+- Documentation updates for callback functionality.
+- Included detailed unit tests for `onAnimationStart` and `onAnimationStop` callbacks.
+
+### Changed
+- Optimized animation control in `TestableShimmer` for precise testing.
+- Enhanced example application to showcase various configurations and new callback features.
+
 ## [0.0.5] - 2024-06-12
 ### Added
 - Added support for custom gradients.

@@ -282,9 +282,14 @@ A: You can set the isDarkMode property to true to automatically adjust the color
 ## Support the Project
 If you find this project useful and would like to support its ongoing development, consider making a donation.
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/iqbalfauzien)
+[PayPal](https://www.paypal.com/paypalme/iqbalfauzien)
+
+![PayPal QR Code](assets/paypal_qr_code.png)
 
 [Saweria](https://saweria.co/iqbalfauzien)
 ![Saweria QR Code](assets/qr_code.png)
+
 
 ## Contribution Guidelines
 
