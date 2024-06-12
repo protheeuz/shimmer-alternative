@@ -31,6 +31,12 @@ class ShimmerAlternative extends StatelessWidget {
   /// Custom shape builder callback.
   final CustomShapeBuilder? customShapeBuilder;
 
+  /// Callback when the animation starts.
+  final VoidCallback? onAnimationStart;
+
+  /// Callback when the animation stops.
+  final VoidCallback? onAnimationStop;
+
   /// Creates a [ShimmerAlternative] widget.
   const ShimmerAlternative({
     Key? key,
@@ -43,6 +49,8 @@ class ShimmerAlternative extends StatelessWidget {
     this.customGradient,
     this.isDarkMode = false,
     this.customShapeBuilder,
+    this.onAnimationStart,
+    this.onAnimationStop,
   }) : super(key: key);
 
   @override
@@ -51,15 +59,19 @@ class ShimmerAlternative extends StatelessWidget {
     final adjustedHighlightColor =
         isDarkMode ? Colors.grey[600]! : highlightColor;
 
-    return _Shimmer.fromColors(
-      baseColor: adjustedBaseColor,
-      highlightColor: adjustedHighlightColor,
-      customGradient: customGradient,
-      child: child,
-      duration: duration,
-      direction: direction,
-      shape: shape,
-      customShapeBuilder: customShapeBuilder,
+    return RepaintBoundary(
+      child: _Shimmer.fromColors(
+        baseColor: adjustedBaseColor,
+        highlightColor: adjustedHighlightColor,
+        customGradient: customGradient,
+        child: child,
+        duration: duration,
+        direction: direction,
+        shape: shape,
+        customShapeBuilder: customShapeBuilder,
+        onAnimationStart: onAnimationStart,
+        onAnimationStop: onAnimationStop,
+      ),
     );
   }
 }
@@ -83,6 +95,8 @@ class _Shimmer extends StatefulWidget {
   final ShimmerShape shape;
   final Gradient? customGradient;
   final CustomShapeBuilder? customShapeBuilder;
+  final VoidCallback? onAnimationStart;
+  final VoidCallback? onAnimationStop;
 
   const _Shimmer({
     required this.child,
@@ -93,6 +107,8 @@ class _Shimmer extends StatefulWidget {
     required this.shape,
     this.customGradient,
     this.customShapeBuilder,
+    this.onAnimationStart,
+    this.onAnimationStop,
   });
 
   static Widget fromColors({
@@ -104,6 +120,8 @@ class _Shimmer extends StatefulWidget {
     ShimmerShape shape = ShimmerShape.rectangle,
     Gradient? customGradient,
     CustomShapeBuilder? customShapeBuilder,
+    VoidCallback? onAnimationStart,
+    VoidCallback? onAnimationStop,
   }) {
     return _Shimmer(
       child: child,
@@ -114,6 +132,8 @@ class _Shimmer extends StatefulWidget {
       shape: shape,
       customGradient: customGradient,
       customShapeBuilder: customShapeBuilder,
+      onAnimationStart: onAnimationStart,
+      onAnimationStop: onAnimationStop,
     );
   }
 
@@ -129,7 +149,14 @@ class _ShimmerState extends State<_Shimmer>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: widget.duration)
-      ..repeat();
+      ..repeat()
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.forward) {
+          widget.onAnimationStart?.call();
+        } else if (status == AnimationStatus.dismissed) {
+          widget.onAnimationStop?.call();
+        }
+      });
   }
 
   @override
