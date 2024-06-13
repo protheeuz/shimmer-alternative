@@ -342,8 +342,9 @@ If you find this project useful and would like to support its ongoing developmen
 
 ![PayPal QR Code](assets/paypal_qr_code.png)
 
-[Saweria](https://saweria.co/iqbalfauzien)
+[![Donate Saweria](https://img.shields.io/badge/Donate-Saweria-brightgreen)](https://saweria.co/iqbalfauzien)
 ![Saweria QR Code](assets/qr_code.png)
+
 
 
 ## Contribution Guidelines
