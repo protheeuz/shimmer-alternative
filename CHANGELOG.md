@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.7+1] - 2024-06-13
+### Added
+- Added `colorInterpolation`, `loopCount`, and `easing` properties.
+- Improved the shimmer effect with more customizable options.
+- Enhanced support for different shimmer directions.
+
+### Changed
+- Updated the default colors for light and dark modes.
+- Improved the default shimmer animation to be smoother and more visually appealing.
+
 ## [0.0.7] - 2024-06-13
 ### Added
 - Added color interpolation feature.
