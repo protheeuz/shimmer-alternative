@@ -8,8 +8,8 @@ class ShimmerAlternative extends StatefulWidget {
   const ShimmerAlternative({
     Key? key,
     required this.child,
-    this.baseColor = const Color(0xFFE0E0E0),
-    this.highlightColor = const Color(0xFFF5F5F5),
+    this.baseColor = const Color(0xFFBDBDBD), // Default base color
+    this.highlightColor = const Color(0xFFFFFFFF), // Default highlight color
     this.duration = const Duration(milliseconds: 1500),
     this.direction = ShimmerDirection.ltr,
     this.shape = ShimmerShape.rectangle,
@@ -77,6 +77,7 @@ class ShimmerAlternative extends StatefulWidget {
 class ShimmerAlternativeState extends State<ShimmerAlternative>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
+  int _currentLoop = 0;
 
   @override
   void initState() {
@@ -87,6 +88,15 @@ class ShimmerAlternativeState extends State<ShimmerAlternative>
     )
       ..repeat()
       ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          if (widget.loopCount > 0 && _currentLoop >= widget.loopCount) {
+            _controller.stop();
+            widget.onAnimationStop?.call();
+          } else {
+            _currentLoop++;
+            _controller.forward(from: 0.0);
+          }
+        }
         if (status == AnimationStatus.forward) {
           widget.onAnimationStart?.call();
         } else if (status == AnimationStatus.dismissed) {
@@ -114,35 +124,42 @@ class ShimmerAlternativeState extends State<ShimmerAlternative>
   @override
   Widget build(BuildContext context) {
     final Color adjustedBaseColor =
-        widget.isDarkMode ? Colors.grey[800]! : widget.baseColor;
+        widget.isDarkMode ? Colors.grey[700]! : widget.baseColor;
     final Color adjustedHighlightColor =
-        widget.isDarkMode ? Colors.grey[600]! : widget.highlightColor;
+        widget.isDarkMode ? Colors.grey[500]! : widget.highlightColor;
 
     return RepaintBoundary(
-      child: ShaderMask(
-        shaderCallback: (Rect bounds) {
-          final Gradient gradient = widget.customGradient ??
-              LinearGradient(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, Widget? child) {
+          return ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return LinearGradient(
                 begin: _getGradientBegin(),
                 end: _getGradientEnd(),
                 colors: <Color>[
-                  adjustedBaseColor.withOpacity(widget.colorInterpolation),
-                  adjustedHighlightColor.withOpacity(widget.colorInterpolation),
-                  adjustedBaseColor.withOpacity(widget.colorInterpolation),
+                  adjustedBaseColor.withOpacity(widget.opacity),
+                  adjustedHighlightColor.withOpacity(widget.opacity),
+                  adjustedBaseColor.withOpacity(widget.opacity),
                 ],
                 stops: <double>[
-                  _controller.value - 0.3,
-                  _controller.value,
-                  _controller.value + 0.3,
+                  widget.colorInterpolation - 0.3,
+                  widget.colorInterpolation,
+                  widget.colorInterpolation + 0.3,
                 ],
-              );
-          return gradient.createShader(bounds);
+                transform: _SlidingGradientTransform(
+                  slidePercent: _controller.value,
+                  direction: widget.direction,
+                ),
+              ).createShader(bounds);
+            },
+            blendMode: BlendMode.srcATop,
+            child: CustomPaint(
+              painter: _ShimmerPainter(widget.shape, widget.customShapeBuilder),
+              child: widget.child,
+            ),
+          );
         },
-        blendMode: BlendMode.srcATop,
-        child: CustomPaint(
-          painter: _ShimmerPainter(widget.shape, widget.customShapeBuilder),
-          child: widget.child,
-        ),
       ),
     );
   }
@@ -218,5 +235,30 @@ class _ShimmerPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+class _SlidingGradientTransform extends GradientTransform {
+  const _SlidingGradientTransform({
+    required this.slidePercent,
+    required this.direction,
+  });
+
+  final double slidePercent;
+  final ShimmerDirection direction;
+
+  @override
+  Matrix4? transform(Rect bounds, {TextDirection? textDirection}) {
+    switch (direction) {
+      case ShimmerDirection.rtl:
+        return Matrix4.translationValues(-bounds.width * slidePercent, 0.0, 0.0);
+      case ShimmerDirection.ttb:
+        return Matrix4.translationValues(0.0, bounds.height * slidePercent, 0.0);
+      case ShimmerDirection.btt:
+        return Matrix4.translationValues(0.0, -bounds.height * slidePercent, 0.0);
+      case ShimmerDirection.ltr:
+      default:
+        return Matrix4.translationValues(bounds.width * slidePercent, 0.0, 0.0);
+    }
   }
 }
