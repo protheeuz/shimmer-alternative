@@ -251,11 +251,14 @@ class _SlidingGradientTransform extends GradientTransform {
   Matrix4? transform(Rect bounds, {TextDirection? textDirection}) {
     switch (direction) {
       case ShimmerDirection.rtl:
-        return Matrix4.translationValues(-bounds.width * slidePercent, 0.0, 0.0);
+        return Matrix4.translationValues(
+            -bounds.width * slidePercent, 0.0, 0.0);
       case ShimmerDirection.ttb:
-        return Matrix4.translationValues(0.0, bounds.height * slidePercent, 0.0);
+        return Matrix4.translationValues(
+            0.0, bounds.height * slidePercent, 0.0);
       case ShimmerDirection.btt:
-        return Matrix4.translationValues(0.0, -bounds.height * slidePercent, 0.0);
+        return Matrix4.translationValues(
+            0.0, -bounds.height * slidePercent, 0.0);
       case ShimmerDirection.ltr:
       default:
         return Matrix4.translationValues(bounds.width * slidePercent, 0.0, 0.0);
