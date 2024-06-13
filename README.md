@@ -339,11 +339,11 @@ If you find this project useful and would like to support its ongoing developmen
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/iqbalfauzien)
 ![PayPal](https://www.paypal.com/paypalme/iqbalfauzien)
+![Saweria QR Code](assets/qr_code.png)
 
 ![PayPal QR Code](assets/paypal_qr_code.png)
 
 [![Donate Saweria](https://img.shields.io/badge/Donate-Saweria-brightgreen)](https://saweria.co/iqbalfauzien)
-![Saweria QR Code](assets/qr_code.png)
 
 
 
